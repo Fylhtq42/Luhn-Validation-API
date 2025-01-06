@@ -1,17 +1,17 @@
 @LuhnValidationApi_HostAddress = http://localhost:5144
 
 ###
-# VALID credit card number (should pass Luhn)
+# VALID credit card number (with dashes, passes Luhn)
 POST {{LuhnValidationApi_HostAddress}}/api/validate-credit-card
 Accept: application/json
 Content-Type: application/json
 
 {
-  "creditCardNumber": "4532015112830366"
+  "creditCardNumber": "4532-01511-2830-366"
 }
 
 ###
-# INVALID Luhn check
+# INVALID Luhn check (fails Luhn)
 POST {{LuhnValidationApi_HostAddress}}/api/validate-credit-card
 Accept: application/json
 Content-Type: application/json
