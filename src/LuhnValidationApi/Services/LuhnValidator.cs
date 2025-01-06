@@ -9,31 +9,23 @@ namespace LuhnValidationApi.Services;
 public interface ILuhnValidator
 {
     /// <summary>
-    ///     Checks if the provided credit card number is valid based on the Luhn algorithm.
+    /// Performs a pure Luhn check on a string of digits.
     /// </summary>
-    /// <param name="creditCardNumber">The credit card number as a string.</param>
-    /// <returns>True if valid; otherwise, false.</returns>
-    bool IsValid(string creditCardNumber);
+    /// <param name="digitsOnly">A string containing only digits (e.g., "4532015112830366").</param>
+    /// <returns>True if the string passes Luhn; otherwise, false.</returns>
+    bool ValidateLuhn(string digitsOnly);
 }
 
 public class LuhnValidator : ILuhnValidator
 {
-    public bool IsValid(string creditCardNumber)
+    public bool ValidateLuhn(string digitsOnly)
     {
-        if (string.IsNullOrWhiteSpace(creditCardNumber))
-            throw new InvalidCreditCardException("Credit card number cannot be empty or whitespace.");
-
-        // Note: We scan the string twice because of this check. It’s no problem to move it into the Luhn loop,
-        // but in enterprise code—where the complexity is the same—I prefer a clearer, more readable approach.
-        if (!creditCardNumber.All(char.IsDigit))
-            throw new InvalidCreditCardException("Credit card number must contain only digits.");
-
         var sum = 0;
         var doubleDigit = false;
 
-        for (var i = creditCardNumber.Length - 1; i >= 0; i--)
+        for (var i = digitsOnly.Length - 1; i >= 0; i--)
         {
-            var digit = ConvertCharToDigit(creditCardNumber, i);
+            var digit = ConvertCharToDigit(digitsOnly, i);
 
             if (doubleDigit) digit = HandleDouble(digit);
 

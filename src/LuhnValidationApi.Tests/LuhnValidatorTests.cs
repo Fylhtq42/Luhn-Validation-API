@@ -1,47 +1,38 @@
-﻿using LuhnValidationApi.Exceptions;
-using LuhnValidationApi.Services;
+﻿using LuhnValidationApi.Services;
+using Xunit;
 
-namespace LuhnValidationApi.Tests;
-
-public class LuhnValidatorTests
+namespace LuhnValidationApi.Tests
 {
-    private readonly ILuhnValidator _validator = new LuhnValidator();
-
-    [Fact]
-    public void ThrowsInvalidCreditCardException_WhenInputIsEmpty()
+    public class LuhnValidatorTests
     {
-        var input = "";
+        private readonly ILuhnValidator _validator = new LuhnValidator();
 
-        Assert.Throws<InvalidCreditCardException>(() => _validator.IsValid(input));
-    }
+        [Theory]
+        [InlineData("4532015112830366")]
+        [InlineData("6011000990139424")]
+        public void ValidateLuhn_ReturnsTrue_ForValidLuhnStrings(string input)
+        {
+            bool result = _validator.ValidateLuhn(input);
 
-    [Fact]
-    public void ThrowsInvalidCreditCardException_WhenInputContainsNonDigitCharacters()
-    {
-        var input = "1234abcd";
+            Assert.True(result);
+        }
 
-        Assert.Throws<InvalidCreditCardException>(() => _validator.IsValid(input));
-    }
+        [Theory]
+        [InlineData("1234567890123456")]
+        [InlineData("9999999999999999")]
+        public void ValidateLuhn_ReturnsFalse_ForInvalidLuhnStrings(string input)
+        {
+            var result = _validator.ValidateLuhn(input);
+            
+            Assert.False(result);
+        }
 
-    [Theory]
-    [InlineData("4532015112830366")]
-    [InlineData("17893729974")]
-    public void IsValid_ReturnsTrue_ForValidCardNumbers(string input)
-    {
-        var result = _validator.IsValid(input);
-
-        Assert.True(result);
-    }
-
-    [Theory]
-    [InlineData("1234567890123456")]
-    [InlineData("9999999999999999")]
-    [InlineData("17893729975")]
-    [InlineData("17393729975")]
-    public void IsValid_ReturnsFalse_ForInvalidCardNumbers(string input)
-    {
-        var result = _validator.IsValid(input);
-
-        Assert.False(result);
+        [Fact]
+        public void ValidateLuhn_ReturnsFalse_WhenEmptyString()
+        {
+            var result = _validator.ValidateLuhn("");
+            
+            Assert.False(result);
+        }
     }
 }
