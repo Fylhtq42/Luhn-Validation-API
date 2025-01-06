@@ -1,28 +1,31 @@
 # Luhn Validation API
 
-This API provides a single endpoint to check whether a given credit card number is **valid** according to the [Luhn algorithm](https://en.wikipedia.org/wiki/Luhn_algorithm).
+This API provides a single endpoint to check whether a given credit card number is **valid** according to
+the [Luhn algorithm](https://en.wikipedia.org/wiki/Luhn_algorithm).
 
 ## Endpoint
 
 ### `POST /api/validate-credit-card`
 
 **Description**  
-Accepts a JSON payload containing a credit card number. Returns an indication of whether that number is valid (passes Luhn checks) or invalid.
+Accepts a JSON payload containing a credit card number. Returns an indication of whether that number is valid (passes
+Luhn checks) or invalid.
 
 ---
 
 ## Request Format
 
-**Body**  
+**Body**
+
 ```json
 {
   "creditCardNumber": "string"
 }
 ```
 
-| Field             | Type   | Required | Description                          |
-|-------------------|--------|----------|--------------------------------------|
-| `creditCardNumber`| string | Yes      | The credit card number to validate.  |
+| Field              | Type   | Required | Description                         |
+|--------------------|--------|----------|-------------------------------------|
+| `creditCardNumber` | string | Yes      | The credit card number to validate. |
 
 ---
 
@@ -30,14 +33,17 @@ Accepts a JSON payload containing a credit card number. Returns an indication of
 
 ### **200 OK**
 
-If the input was **processed** successfully, you'll receive a JSON object indicating whether the number is valid according to the Luhn algorithm:
+If the input was **processed** successfully, you'll receive a JSON object indicating whether the number is valid
+according to the Luhn algorithm:
 
 ```json
 {
   "isValid": true
 }
 ```
+
 or
+
 ```json
 {
   "isValid": false
@@ -56,6 +62,7 @@ If the input is invalid (e.g., empty string, contains non-digit characters, etc.
   "error": "Credit card number must contain only digits."
 }
 ```
+
 *(The exact message may vary. This indicates the server recognized invalid input.)*
 
 ### **500 Internal Server Error**
@@ -74,7 +81,8 @@ If an unexpected error occurs in the server, you receive:
 
 ### Valid Card Number Example
 
-**Request**  
+**Request**
+
 ```bash
 curl -X POST \
   -H "Content-Type: application/json" \
@@ -82,7 +90,8 @@ curl -X POST \
   http://localhost:5000/api/validate-credit-card
 ```
 
-**Successful Response (200)**  
+**Successful Response (200)**
+
 ```json
 {
   "isValid": true
@@ -93,7 +102,8 @@ curl -X POST \
 
 ### Luhn Fail Example
 
-**Request**  
+**Request**
+
 ```bash
 curl -X POST \
   -H "Content-Type: application/json" \
@@ -122,7 +132,8 @@ Depending on your implementation:
 
 ### Non-Digit or Empty String
 
-**Request**  
+**Request**
+
 ```bash
 curl -X POST \
   -H "Content-Type: application/json" \
@@ -130,7 +141,8 @@ curl -X POST \
   http://localhost:5000/api/validate-credit-card
 ```
 
-**Response (400 Bad Request)**  
+**Response (400 Bad Request)**
+
 ```json
 {
   "error": "Credit card number must contain only digits."
@@ -142,5 +154,6 @@ curl -X POST \
 ## Notes
 
 - **Security**: Do not log or store credit card numbers in plain text in production environments.
-- **Error Handling**: This API may return a 400 (Bad Request) for invalid inputs and a 500 (Internal Server Error) for unforeseen errors.
+- **Error Handling**: This API may return a 400 (Bad Request) for invalid inputs and a 500 (Internal Server Error) for
+  unforeseen errors.
 - **Luhn Algorithm**: [Read more about Luhn checks here](https://en.wikipedia.org/wiki/Luhn_algorithm).

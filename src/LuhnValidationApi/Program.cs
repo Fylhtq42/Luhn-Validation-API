@@ -1,20 +1,16 @@
-using LuhnValidationApi;
 using LuhnValidationApi.Exceptions;
 using LuhnValidationApi.Models;
 using LuhnValidationApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddOpenApi(); 
+builder.Services.AddOpenApi();
 
 builder.Services.AddScoped<ILuhnValidator, LuhnValidator>();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
+if (app.Environment.IsDevelopment()) app.MapOpenApi();
 
 app.UseHttpsRedirection();
 
