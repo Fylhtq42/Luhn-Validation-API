@@ -1,4 +1,5 @@
-﻿using LuhnValidationApi.Services;
+﻿using LuhnValidationApi.Exceptions;
+using LuhnValidationApi.Services;
 
 namespace LuhnValidationApi.Tests;
 

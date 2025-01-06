@@ -1,3 +1,5 @@
+using LuhnValidationApi.Exceptions;
+
 namespace LuhnValidationApi.Services;
 
 // Just a small comment (I left it here because it is just the homework): There are two ways to organize an interface and class.
