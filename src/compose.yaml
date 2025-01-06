@@ -1,6 +1,12 @@
-﻿services:
+﻿version: '3.7'
+
+services:
   luhnvalidationapi:
     image: luhnvalidationapi
     build:
       context: .
       dockerfile: LuhnValidationApi/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_URLS: "http://+:8080"
