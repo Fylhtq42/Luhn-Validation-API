@@ -1,6 +1,31 @@
 @LuhnValidationApi_HostAddress = http://localhost:5144
 
-GET {{LuhnValidationApi_HostAddress}}/weatherforecast/
+###
+# VALID credit card number (should pass Luhn)
+POST {{LuhnValidationApi_HostAddress}}/api/validate-credit-card
 Accept: application/json
+Content-Type: application/json
+
+{
+  "creditCardNumber": "4532015112830366"
+}
 
 ###
+# INVALID Luhn check
+POST {{LuhnValidationApi_HostAddress}}/api/validate-credit-card
+Accept: application/json
+Content-Type: application/json
+
+{
+  "creditCardNumber": "1234567890123456"
+}
+
+###
+# NON-DIGIT input (should trigger 400 error)
+POST {{LuhnValidationApi_HostAddress}}/api/validate-credit-card
+Accept: application/json
+Content-Type: application/json
+
+{
+  "creditCardNumber": "abcd"
+}
