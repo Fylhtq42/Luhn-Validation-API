@@ -25,7 +25,7 @@ public class LuhnValidator : ILuhnValidator
         {
             var digit = ConvertCharToDigit(digitsOnly, i);
 
-            if (doubleDigit) digit = HandleDouble(digit);
+            if (doubleDigit) digit = CalculateNewDigit(digit);
 
             sum += digit;
             doubleDigit = !doubleDigit;
@@ -42,7 +42,7 @@ public class LuhnValidator : ILuhnValidator
         return creditCardNumber[i] - '0';
     }
 
-    private static int HandleDouble(int digit)
+    private static int CalculateNewDigit(int digit)
     {
         digit *= 2;
         if (digit >= 10)

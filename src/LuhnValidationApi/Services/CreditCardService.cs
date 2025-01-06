@@ -8,7 +8,7 @@ public interface ICreditCardService
     ///     Validates a raw credit card input (may include spaces or dashes).
     /// </summary>
     /// <param name="creditCardNumber">Raw user input, e.g., "4532-0151-1283-0366".</param>
-    /// <returns>True if valid. Throws an exception if invalid input or fails Luhn.</returns>
+    /// <returns>True if valid, false if not. Throws an exception if invalid input.</returns>
     bool IsValidCreditCard(string creditCardNumber);
 }
 
@@ -41,7 +41,7 @@ public class CreditCardService : ICreditCardService
 
     private static string CleanupCardNumber(string creditCardNumber)
     {
-        // 2. Strip out spaces, dashes, etc.
+        // Strip out spaces, dashes, etc.
         // e.g., "4532-0151-1283-0366" -> "4532015112830366"
         return new string(creditCardNumber.Where(char.IsDigit).ToArray());
     }

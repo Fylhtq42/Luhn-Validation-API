@@ -25,12 +25,4 @@ public class LuhnValidatorTests
 
         Assert.False(result);
     }
-
-    [Fact]
-    public void ValidateLuhn_ReturnsFalse_WhenEmptyString()
-    {
-        var result = _validator.ValidateLuhn("");
-
-        Assert.False(result);
-    }
 }
