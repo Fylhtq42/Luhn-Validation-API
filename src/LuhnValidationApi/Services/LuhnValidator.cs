@@ -19,12 +19,12 @@ public class LuhnValidator : ILuhnValidator
     public bool IsValid(string creditCardNumber)
     {
         if (string.IsNullOrWhiteSpace(creditCardNumber))
-            return false;
+            throw new InvalidCreditCardException("Credit card number cannot be empty or whitespace.");
 
         // Note: We scan the string twice because of this check. It’s no problem to move it into the Luhn loop,
         // but in enterprise code—where the complexity is the same—I prefer a clearer, more readable approach.
         if (!creditCardNumber.All(char.IsDigit))
-            return false;
+            throw new InvalidCreditCardException("Credit card number must contain only digits.");
 
         var sum = 0;
         var doubleDigit = false;

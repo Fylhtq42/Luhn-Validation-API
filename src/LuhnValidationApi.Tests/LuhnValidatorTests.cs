@@ -4,31 +4,22 @@ namespace LuhnValidationApi.Tests;
 
 public class LuhnValidatorTests
 {
-    private readonly ILuhnValidator _validator;
-
-    public LuhnValidatorTests()
-    {
-        _validator = new LuhnValidator();
-    }
+    private readonly ILuhnValidator _validator = new LuhnValidator();
 
     [Fact]
-    public void IsValid_ReturnsFalse_WhenEmptyString()
+    public void ThrowsInvalidCreditCardException_WhenInputIsEmpty()
     {
         var input = "";
 
-        var result = _validator.IsValid(input);
-
-        Assert.False(result);
+        Assert.Throws<InvalidCreditCardException>(() => _validator.IsValid(input));
     }
 
     [Fact]
-    public void IsValid_ReturnsFalse_WhenNonNumeric()
+    public void ThrowsInvalidCreditCardException_WhenInputContainsNonDigitCharacters()
     {
         var input = "1234abcd";
 
-        var result = _validator.IsValid(input);
-
-        Assert.False(result);
+        Assert.Throws<InvalidCreditCardException>(() => _validator.IsValid(input));
     }
 
     [Theory]
