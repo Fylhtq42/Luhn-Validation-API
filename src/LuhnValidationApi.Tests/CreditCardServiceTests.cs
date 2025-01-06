@@ -2,99 +2,98 @@ using LuhnValidationApi.Exceptions;
 using LuhnValidationApi.Services;
 using Moq;
 
-namespace LuhnValidationApi.Tests
+namespace LuhnValidationApi.Tests;
+
+public class CreditCardServiceTests
 {
-    public class CreditCardServiceTests
+    private readonly CreditCardService _creditCardService;
+    private readonly Mock<ILuhnValidator> _luhnValidatorMock;
+
+    public CreditCardServiceTests()
     {
-        private readonly Mock<ILuhnValidator> _luhnValidatorMock;
-        private readonly CreditCardService _creditCardService;
+        _luhnValidatorMock = new Mock<ILuhnValidator>();
+        _creditCardService = new CreditCardService(_luhnValidatorMock.Object);
+    }
 
-        public CreditCardServiceTests()
-        {
-            _luhnValidatorMock = new Mock<ILuhnValidator>();
-            _creditCardService = new CreditCardService(_luhnValidatorMock.Object);
-        }
+    [Fact]
+    public void ThrowsInvalidCreditCardException_WhenInputIsEmptyOrWhitespace()
+    {
+        Assert.Throws<InvalidCreditCardException>(() =>
+            _creditCardService.IsValidCreditCard(""));
 
-        [Fact]
-        public void ThrowsInvalidCreditCardException_WhenInputIsEmptyOrWhitespace()
-        {
-            Assert.Throws<InvalidCreditCardException>(() =>
-                _creditCardService.IsValidCreditCard(""));
-            
-            Assert.Throws<InvalidCreditCardException>(() =>
-                _creditCardService.IsValidCreditCard("   "));
-        }
+        Assert.Throws<InvalidCreditCardException>(() =>
+            _creditCardService.IsValidCreditCard("   "));
+    }
 
-        [Fact]
-        public void ThrowsInvalidCreditCardException_WhenNoDigitsAreFound()
-        {
-            Assert.Throws<InvalidCreditCardException>(() =>
-                _creditCardService.IsValidCreditCard("----"));
-        }
+    [Fact]
+    public void ThrowsInvalidCreditCardException_WhenNoDigitsAreFound()
+    {
+        Assert.Throws<InvalidCreditCardException>(() =>
+            _creditCardService.IsValidCreditCard("----"));
+    }
 
-        [Fact]
-        public void ThrowsInvalidCreditCardException_WhenNumberIsTooShort()
-        {
-            // e.g., 12 digits
-            var shortNumber = new string('1', 12);
+    [Fact]
+    public void ThrowsInvalidCreditCardException_WhenNumberIsTooShort()
+    {
+        // e.g., 12 digits
+        var shortNumber = new string('1', 12);
 
-            Assert.Throws<InvalidCreditCardException>(() =>
-                _creditCardService.IsValidCreditCard(shortNumber));
-        }
+        Assert.Throws<InvalidCreditCardException>(() =>
+            _creditCardService.IsValidCreditCard(shortNumber));
+    }
 
-        [Fact]
-        public void ThrowsInvalidCreditCardException_WhenNumberIsTooLong()
-        {
-            // e.g., 20 digits
-            var longNumber = new string('1', 20);
+    [Fact]
+    public void ThrowsInvalidCreditCardException_WhenNumberIsTooLong()
+    {
+        // e.g., 20 digits
+        var longNumber = new string('1', 20);
 
-            Assert.Throws<InvalidCreditCardException>(() =>
-                _creditCardService.IsValidCreditCard(longNumber));
-        }
+        Assert.Throws<InvalidCreditCardException>(() =>
+            _creditCardService.IsValidCreditCard(longNumber));
+    }
 
-        [Fact]
-        public void ReturnsFalse_WhenLuhnValidationFails()
-        {
-            var input = "9999999999999999";
-            
-            _luhnValidatorMock
-                .Setup(v => v.ValidateLuhn(It.IsAny<string>()))
-                .Returns(false);
+    [Fact]
+    public void ReturnsFalse_WhenLuhnValidationFails()
+    {
+        var input = "9999999999999999";
 
-            var result = _creditCardService.IsValidCreditCard(input);
+        _luhnValidatorMock
+            .Setup(v => v.ValidateLuhn(It.IsAny<string>()))
+            .Returns(false);
 
-            Assert.False(result);
-            _luhnValidatorMock.Verify(v => v.ValidateLuhn("9999999999999999"), Times.Once);
-        }
+        var result = _creditCardService.IsValidCreditCard(input);
 
-        [Fact]
-        public void ReturnsTrue_WhenLuhnValidationSucceeds()
-        {
-            var input = "4532015112830366";
+        Assert.False(result);
+        _luhnValidatorMock.Verify(v => v.ValidateLuhn("9999999999999999"), Times.Once);
+    }
 
-            _luhnValidatorMock
-                .Setup(v => v.ValidateLuhn(It.IsAny<string>()))
-                .Returns(true);
+    [Fact]
+    public void ReturnsTrue_WhenLuhnValidationSucceeds()
+    {
+        var input = "4532015112830366";
 
-            var result = _creditCardService.IsValidCreditCard(input);
+        _luhnValidatorMock
+            .Setup(v => v.ValidateLuhn(It.IsAny<string>()))
+            .Returns(true);
 
-            Assert.True(result);
-            _luhnValidatorMock.Verify(v => v.ValidateLuhn("4532015112830366"), Times.Once);
-        }
+        var result = _creditCardService.IsValidCreditCard(input);
 
-        [Fact]
-        public void DoStripsNonDigits_BeforeLuhnCheck()
-        {
-            var input = "4532-0151-1283-0366";
+        Assert.True(result);
+        _luhnValidatorMock.Verify(v => v.ValidateLuhn("4532015112830366"), Times.Once);
+    }
 
-            _luhnValidatorMock
-                .Setup(v => v.ValidateLuhn("4532015112830366"))
-                .Returns(true);
+    [Fact]
+    public void DoStripsNonDigits_BeforeLuhnCheck()
+    {
+        var input = "4532-0151-1283-0366";
 
-            var result = _creditCardService.IsValidCreditCard(input);
+        _luhnValidatorMock
+            .Setup(v => v.ValidateLuhn("4532015112830366"))
+            .Returns(true);
 
-            Assert.True(result);
-            _luhnValidatorMock.Verify(v => v.ValidateLuhn("4532015112830366"), Times.Once);
-        }
+        var result = _creditCardService.IsValidCreditCard(input);
+
+        Assert.True(result);
+        _luhnValidatorMock.Verify(v => v.ValidateLuhn("4532015112830366"), Times.Once);
     }
 }

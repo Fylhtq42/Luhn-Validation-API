@@ -1,38 +1,36 @@
 ﻿using LuhnValidationApi.Services;
-using Xunit;
 
-namespace LuhnValidationApi.Tests
+namespace LuhnValidationApi.Tests;
+
+public class LuhnValidatorTests
 {
-    public class LuhnValidatorTests
+    private readonly ILuhnValidator _validator = new LuhnValidator();
+
+    [Theory]
+    [InlineData("4532015112830366")]
+    [InlineData("6011000990139424")]
+    public void ValidateLuhn_ReturnsTrue_ForValidLuhnStrings(string input)
     {
-        private readonly ILuhnValidator _validator = new LuhnValidator();
+        var result = _validator.ValidateLuhn(input);
 
-        [Theory]
-        [InlineData("4532015112830366")]
-        [InlineData("6011000990139424")]
-        public void ValidateLuhn_ReturnsTrue_ForValidLuhnStrings(string input)
-        {
-            bool result = _validator.ValidateLuhn(input);
+        Assert.True(result);
+    }
 
-            Assert.True(result);
-        }
+    [Theory]
+    [InlineData("1234567890123456")]
+    [InlineData("9999999999999999")]
+    public void ValidateLuhn_ReturnsFalse_ForInvalidLuhnStrings(string input)
+    {
+        var result = _validator.ValidateLuhn(input);
 
-        [Theory]
-        [InlineData("1234567890123456")]
-        [InlineData("9999999999999999")]
-        public void ValidateLuhn_ReturnsFalse_ForInvalidLuhnStrings(string input)
-        {
-            var result = _validator.ValidateLuhn(input);
-            
-            Assert.False(result);
-        }
+        Assert.False(result);
+    }
 
-        [Fact]
-        public void ValidateLuhn_ReturnsFalse_WhenEmptyString()
-        {
-            var result = _validator.ValidateLuhn("");
-            
-            Assert.False(result);
-        }
+    [Fact]
+    public void ValidateLuhn_ReturnsFalse_WhenEmptyString()
+    {
+        var result = _validator.ValidateLuhn("");
+
+        Assert.False(result);
     }
 }

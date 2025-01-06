@@ -1,5 +1,3 @@
-using LuhnValidationApi.Exceptions;
-
 namespace LuhnValidationApi.Services;
 
 // Just a small comment (I left it here because it is just the homework): There are two ways to organize an interface and class.
@@ -9,7 +7,7 @@ namespace LuhnValidationApi.Services;
 public interface ILuhnValidator
 {
     /// <summary>
-    /// Performs a pure Luhn check on a string of digits.
+    ///     Performs a pure Luhn check on a string of digits.
     /// </summary>
     /// <param name="digitsOnly">A string containing only digits (e.g., "4532015112830366").</param>
     /// <returns>True if the string passes Luhn; otherwise, false.</returns>

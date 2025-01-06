@@ -25,8 +25,8 @@ algorithm, or an error if the input is invalid.
 }
 ```
 
-| Field              | Type   | Required | Description                                            |
-|--------------------|--------|----------|--------------------------------------------------------|
+| Field              | Type   | Required | Description                                           |
+|--------------------|--------|----------|-------------------------------------------------------|
 | `creditCardNumber` | string | Yes      | The credit card number (with optional dashes/spaces). |
 
 ---
@@ -65,9 +65,10 @@ If the input is invalid (e.g., contains zero digits, is too short/long, or is em
 ```
 
 Exact messages vary depending on the specific error condition:
-- **Empty or whitespace input**  
-- **No digits found** (e.g., `"----"` or all spaces)  
-- **Fewer than 13 digits or more than 19 digits**  
+
+- **Empty or whitespace input**
+- **No digits found** (e.g., `"----"` or all spaces)
+- **Fewer than 13 digits or more than 19 digits**
 
 ### 500 Internal Server Error
 
@@ -143,16 +144,18 @@ curl -X POST \
   "error": "Credit card number cannot be empty or whitespace."
 }
 ```
+
 *(Exact wording may differ, e.g., `"No digits found"`, `"Must be between 13 and 19 digits."`, etc.)*
 
 ---
 
 ## Notes
 
-- **Security**: Do not log or store credit card numbers in plain text. Consider masking or tokenizing if you must store them.
+- **Security**: Do not log or store credit card numbers in plain text. Consider masking or tokenizing if you must store
+  them.
 - **Error Handling**:
-  - The API may return `400 Bad Request` if the input is empty, stripped of digits, or outside 13–19 digits.
-  - A failing Luhn check results in `200` with `"isValid": false`.
-- **Luhn Algorithm**: 
-  - [Learn more here](https://en.wikipedia.org/wiki/Luhn_algorithm). 
-  - The service strips common formatting (`-` or spaces) before running the Luhn check.
+    - The API may return `400 Bad Request` if the input is empty, stripped of digits, or outside 13–19 digits.
+    - A failing Luhn check results in `200` with `"isValid": false`.
+- **Luhn Algorithm**:
+    - [Learn more here](https://en.wikipedia.org/wiki/Luhn_algorithm).
+    - The service strips common formatting (`-` or spaces) before running the Luhn check.
