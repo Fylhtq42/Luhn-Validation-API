@@ -1,0 +1,21 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuhnValidationApi", "LuhnValidationApi\LuhnValidationApi.csproj", "{0C71F9A8-571D-4DD4-9FBF-7DB1D7D0D580}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{04D42447-1C8F-45D8-9D73-B1F63BCECCC4}"
+	ProjectSection(SolutionItems) = preProject
+		compose.yaml = compose.yaml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0C71F9A8-571D-4DD4-9FBF-7DB1D7D0D580}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C71F9A8-571D-4DD4-9FBF-7DB1D7D0D580}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C71F9A8-571D-4DD4-9FBF-7DB1D7D0D580}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C71F9A8-571D-4DD4-9FBF-7DB1D7D0D580}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

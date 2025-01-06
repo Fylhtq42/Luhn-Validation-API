@@ -1,0 +1,6 @@
+﻿services:
+  luhnvalidationapi:
+    image: luhnvalidationapi
+    build:
+      context: .
+      dockerfile: LuhnValidationApi/Dockerfile
