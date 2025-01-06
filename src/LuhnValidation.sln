@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		compose.yaml = compose.yaml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuhnValidationApi.Tests", "LuhnValidationApi.Tests\LuhnValidationApi.Tests.csproj", "{3798E986-DA6B-468E-8FA1-6C9E2C02BEFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,5 +19,9 @@ Global
 		{0C71F9A8-571D-4DD4-9FBF-7DB1D7D0D580}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C71F9A8-571D-4DD4-9FBF-7DB1D7D0D580}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C71F9A8-571D-4DD4-9FBF-7DB1D7D0D580}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3798E986-DA6B-468E-8FA1-6C9E2C02BEFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3798E986-DA6B-468E-8FA1-6C9E2C02BEFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3798E986-DA6B-468E-8FA1-6C9E2C02BEFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3798E986-DA6B-468E-8FA1-6C9E2C02BEFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
